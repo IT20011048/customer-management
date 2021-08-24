@@ -2,6 +2,61 @@
 
 {% block content %}
 
-<h4> create customer  </h4>
+<div class="raw">
+
+  <div class="col-sm-4">
+    
+    <h4 class="text-center alert alert-info"> create customer  </h4>
+
+   <form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+   
+    <input type="submit" class="btn btn-success" value="submit" >
+   </form>
+  </div>
+</div>
+     
+      <div class="col-sm-8 offset-4">
+        <h4 class="text-center alert alert-info"> registered customers </h4>
+         {% if stu %}
+         <h4>table data</h4>
+
+     
+    
+       <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Email address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for st in stu %}
+          <tr>
+            <th scope="row">{{st.id}}</th>
+            <td>{{st.name}}</td>
+            <td>{{st.address}}</td>
+            <td>{{st.phone_number}}</td>
+            <td>{{st.email_address}}</td>
+            <td>
+              <a  href="#" class="btn btn-warning btn-sm">edit</a>
+              <a  href="#" class="btn btn-danger btn-sm">delete</a>
+
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    
+     {% else %}
+     <h4 class="text center alert alert-warning"> no records </h4>
+     {% endif %}
+     </div>
+
+
 
 {% endblock content %}
