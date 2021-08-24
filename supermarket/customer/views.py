@@ -29,8 +29,11 @@ def update_data(request, id):
   pi = cus.objects.get(pk=id)
   fm = CustomerRegistration(request.POST, instance=pi)
   if fm.is_valid():
-   fm.save()       
- return render(request,'customer/update.html', {'id' :id } )
+   fm.save()  
+ else:
+    pi = cus.objects.get(pk=id)
+ fm = CustomerRegistration(instance=pi)         
+ return render(request,'customer/update.html', {'form' :fm } )
      
 #this function will delete new customers
 def delete_data(request, id):
