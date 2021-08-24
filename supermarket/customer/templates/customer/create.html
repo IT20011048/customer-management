@@ -43,9 +43,10 @@
             <td>{{st.phone_number}}</td>
             <td>{{st.email_address}}</td>
             <td>
-              <a  href="#" class="btn btn-warning btn-sm">edit</a>
-              <a  href="#" class="btn btn-danger btn-sm">delete</a>
-
+              <a  href="{% url 'updatedata' st.id %}" class="btn btn-warning btn-sm">edit</a>
+              <form action="{% url 'deletedata' st.id %}" method="POST" class="d-inline">{% csrf_token %}
+                  <input type="submit" class="btn btn-danger" value="Delete">                              
+              </form>
             </td>
           </tr>
           {% endfor %}

@@ -1,6 +1,6 @@
 from typing import SupportsRound
 from django.forms.utils import ErrorDict
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponseRedirect
 from .forms import CustomerRegistration
 from .models import cus
 
@@ -22,5 +22,19 @@ def add_show(request):
   fm = CustomerRegistration()  
  stud = cus.objects.all()
  return render( request, 'customer/create.html',{'form': fm,'stu':stud})
-    
+
+ #this function will update/edit
+def update_data(request, id):
+ if request.method == 'POST':
+  pi = cus.objects.get(pk=id)
+  fm = CustomerRegistration(request.POST, instance=pi)
+  if fm.is_valid():
+   fm.save()       
+ return render(request,'customer/update.html', {'id' :id } )
+     
 #this function will delete new customers
+def delete_data(request, id):
+ if request.method == 'POST':
+  pi = cus.objects.get(pk=id)
+  pi.delete()
+ return HttpResponseRedirect('/')
