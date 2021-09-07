@@ -16,3 +16,9 @@ class CustomerRegistration(forms.ModelForm):
              'email_address' : forms.EmailInput(attrs={'class': 'form-control'}),          
 
         }
+
+class Customersearch(forms.ModelForm):
+
+    class Meta:
+        model = cus
+        fields = ['phone_number']

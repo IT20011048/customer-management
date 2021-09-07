@@ -1,13 +1,16 @@
 from typing import SupportsRound
 from django.forms.utils import ErrorDict
-from django.shortcuts import render,HttpResponseRedirect
+from django.shortcuts import render,HttpResponseRedirect,redirect
 from .forms import CustomerRegistration
 from .models import cus
+from .forms import Customersearch
 
-# Create your views here.
+#navigate to home page
+def home(request):
+  return render(request,"home.html")
 
 #this function will add new customers
-def add_show(request):
+def add(request):
  if request.method == 'POST' :
   fm = CustomerRegistration(request.POST) 
   if  fm.is_valid() :
@@ -16,14 +19,25 @@ def add_show(request):
    pn = fm.cleaned_data['phone_number']
    em = fm.cleaned_data['email_address']
    reg = cus(name=nm,address=ad,phone_number=pn,email_address=em)
-   reg.save()  
-   fm = CustomerRegistration()     
+   reg.save()      
  else:
   fm = CustomerRegistration()  
  stud = cus.objects.all()
- return render( request, 'customer/create.html',{'form': fm,'stu':stud})
+ return render( request, 'add.html',{'form': fm,'stu':stud})
 
- #this function will update/edit
+
+#this function will view registered customers
+def create(request):
+ if request.method == 'POST' :
+  fm = CustomerRegistration(request.POST)    
+ else:
+  fm = CustomerRegistration()  
+ stud = cus.objects.all()
+ return render( request, 'create.html',{'form': fm,'stu':stud})
+
+
+
+ #this function will update/edit registered customers
 def update_data(request, id):
  if request.method == 'POST':
   pi = cus.objects.get(pk=id)
@@ -33,11 +47,20 @@ def update_data(request, id):
  else:
     pi = cus.objects.get(pk=id)
  fm = CustomerRegistration(instance=pi)         
- return render(request,'customer/update.html', {'form' :fm } )
+ return render(request,'update.html', {'form' :fm } )
      
 #this function will delete new customers
 def delete_data(request, id):
  if request.method == 'POST':
   pi = cus.objects.get(pk=id)
-  pi.delete()
- return HttpResponseRedirect('/')
+  pi.delete()        
+ return redirect('/create')
+
+#this function will search customers
+def search(request):
+ if request.method == 'POST': 
+  fm = Customersearch(request.POST or None)
+  given_name =request.POST['name']
+  fm = cus.objects.filter(phone_number=given_name)
+ return render(request,'create.html', {'form' :fm } )
+     
