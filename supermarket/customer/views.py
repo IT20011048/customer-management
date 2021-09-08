@@ -1,9 +1,11 @@
 from typing import SupportsRound
 from django.forms.utils import ErrorDict
 from django.shortcuts import render,HttpResponseRedirect,redirect
+from django.utils import html
 from .forms import CustomerRegistration
 from .models import cus
 from .forms import Customersearch
+from .models import *
 
 #navigate to home page
 def home(request):
@@ -58,9 +60,10 @@ def delete_data(request, id):
 
 #this function will search customers
 def search(request):
- if request.method == 'POST': 
   fm = Customersearch(request.POST or None)
-  given_name =request.POST['name']
-  fm = cus.objects.filter(phone_number=given_name)
- return render(request,'create.html', {'form' :fm } )
-     
+  stud = cus.objects.all()
+  if request.method == 'POST':
+   given_name =request.POST['name']
+   stud = cus.objects.filter(phone_number=given_name)
+  return render(request, 'create.html',{'form': fm,'stu':stud})
+  
