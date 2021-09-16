@@ -21,7 +21,9 @@ def add(request):
    pn = fm.cleaned_data['phone_number']
    em = fm.cleaned_data['email_address']
    reg = cus(name=nm,address=ad,phone_number=pn,email_address=em)
-   reg.save()      
+   reg.save()   
+   fm = CustomerRegistration()  
+   
  else:
   fm = CustomerRegistration()  
  stud = cus.objects.all()

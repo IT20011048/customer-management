@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="collapsibleNavbar">
+   <ul class="navbar-nav mr-auto">
+     <li class="nav-item active">
+       <a class="nav-link" href="/">Home</a>
+       </li>
+     <li class="nav-item active"><a class="nav-link" href="/create">Show All</a></li>
+   </ul>
+   <form method="POST" action="search" class="form-inline">
+    {% csrf_token %}
+  <input name="name" class="" type="search" placeholder="enter number" aria-label="Search">
+  <button class=" " type="submit">Search</button>
+  </form>
 
+ </div>
+</nav>
 
-<form method='POST' action='/search'>
-  {% csrf_token %}
-  <input name="name"> <td>
-    <td><button type="submit">search</button></td>
-  </td>
-  <br>
-  <br>
-
-
-</form>
 
       <div class="col-sm-0 offset-0">
-        <h4 class="text-center alert alert-info"> registered customers </h4>
+         <h4 class="text-center alert alert-success"> registered customers </h4>
          {% if stu %}
          <h4>table data</h4>
 
@@ -34,6 +42,8 @@
           </tr>
         </thead>
         <tbody>
+            
+          
           {% for st in stu %}
           <tr>
             <th scope="row">{{st.id}}</th>
@@ -42,6 +52,7 @@
             <td>{{st.phone_number}}</td>
             <td>{{st.email_address}}</td>
             <td>
+              
               <a  href="{% url 'updatedata' st.id %}" class="btn btn-warning btn-sm">edit</a>
               <form action="{% url 'deletedata' st.id %}" method="POST" class="d-inline">{% csrf_token %}
                   <input type="submit" class="btn btn-danger" value="Delete">                              

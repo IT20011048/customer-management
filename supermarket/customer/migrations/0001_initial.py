@@ -10,12 +10,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='cus',
+            name='customer',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=80,null=False,blank=False)),
                 ('address', models.CharField(max_length=150,null=False,blank=False)),
-                ('phone_number', models.CharField(max_length=15, unique=True,blank=False,null=False)),
+                ('phone_number', models.CharField(max_length=12, unique=True,blank=False,null=False)),
                 ('email_address', models.CharField(max_length=70, unique=True)),
             ],
         ),
