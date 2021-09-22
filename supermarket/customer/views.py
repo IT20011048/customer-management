@@ -11,7 +11,7 @@ from .models import *
 def home(request):
   return render(request,"home.html")
 
-#this function will add new customers
+# add new customers
 def add(request):
  if request.method == 'POST' :
   fm = CustomerRegistration(request.POST) 
@@ -30,7 +30,7 @@ def add(request):
  return render( request, 'add.html',{'form': fm,'stu':stud})
 
 
-#this function will view registered customers
+# view registered customers
 def create(request):
  if request.method == 'POST' :
   fm = CustomerRegistration(request.POST)    
@@ -41,7 +41,7 @@ def create(request):
 
 
 
- #this function will update/edit registered customers
+ # update/edit registered customers
 def update_data(request, id):
  if request.method == 'POST':
   pi = cus.objects.get(pk=id)
@@ -53,14 +53,14 @@ def update_data(request, id):
  fm = CustomerRegistration(instance=pi)         
  return render(request,'update.html', {'form' :fm } )
      
-#this function will delete new customers
+# delete customers
 def delete_data(request, id):
  if request.method == 'POST':
   pi = cus.objects.get(pk=id)
   pi.delete()        
  return redirect('/create')
 
-#this function will search customers
+# search customers
 def search(request):
   fm = Customersearch(request.POST or None)
   stud = cus.objects.all()
